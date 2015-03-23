@@ -373,9 +373,11 @@ int main(int argc, char **argv) {
     D("Handling commandline()\n");
     return adb_commandline(argc - 1, const_cast<const char**>(argv + 1));
 #else
+#if !ADB_NON_ANDROID
     /* If adbd runs inside the emulator this will enable adb tracing via
      * adb-debug qemud service in the emulator. */
     adb_qemu_trace_init();
+#endif
     while (1) {
         int c;
         int option_index = 0;
