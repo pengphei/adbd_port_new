@@ -814,7 +814,7 @@ int handle_forward_request(const char* service, transport_type ttype, char* seri
         int createForward = strncmp(service, "kill", 4);
         int no_rebind = 0;
 
-        local = strchr(service, ':') + 1;
+        local = strchr((char *) service, ':') + 1;
 
         // Handle forward:norebind:<local>... here
         if (createForward && !strncmp(local, "norebind:", 9)) {
