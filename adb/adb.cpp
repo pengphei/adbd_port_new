@@ -40,7 +40,9 @@
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
 
 #if !ADB_HOST
+#if ADB_NON_ANDROID
 #include <cutils/properties.h>
+#endif
 #include <sys/capability.h>
 #include <sys/mount.h>
 #endif
@@ -116,15 +118,17 @@ std::string get_trace_setting_from_env() {
 }
 
 #if !ADB_HOST
+#if !ADB_NON_ANDROID
 std::string get_trace_setting_from_prop() {
     char buf[PROPERTY_VALUE_MAX];
     property_get("persist.adb.trace_mask", buf, "");
     return std::string(buf);
 }
 #endif
+#endif
 
 std::string get_trace_setting() {
-#if ADB_HOST
+#if defined(ADB_HOST) || defined(ADB_NON_ANDROID)
     return get_trace_setting_from_env();
 #else
     return get_trace_setting_from_prop();
@@ -293,6 +297,8 @@ static size_t fill_connect_data(char *buf, size_t bufsize)
 {
 #if ADB_HOST
     return snprintf(buf, bufsize, "host::") + 1;
+#elif ADB_NON_ANDROID
+    return snprintf(buf, bufsize, "nonandroid::") + 1;
 #else
     static const char *cnxn_props[] = {
         "ro.product.name",
