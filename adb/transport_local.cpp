@@ -166,7 +166,7 @@ static void *server_socket_thread(void * arg)
 }
 
 /* This is relevant only for ADB daemon running inside the emulator. */
-#if !ADB_HOST
+#if !defined(ADB_HOST) && !defined(ADB_NON_ANDROID)
 /*
  * Redefine open and write for qemu_pipe.h that contains inlined references
  * to those routines. We will redifine them back after qemu_pipe.h inclusion.
@@ -284,7 +284,7 @@ void local_init(int port)
     if(HOST) {
         func = client_socket_thread;
     } else {
-#if ADB_HOST
+#if defined(ADB_HOST) || defined(ADB_NON_ANDROID)
         func = server_socket_thread;
 #else
         /* For the adbd daemon in the system image we need to distinguish
