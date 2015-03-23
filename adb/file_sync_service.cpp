@@ -21,7 +21,9 @@
 
 #include <dirent.h>
 #include <errno.h>
+#if !ADB_NON_ANDROID
 #include <selinux/android.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -70,7 +72,9 @@ static int mkdirs(char *name)
                 *x = '/';
                 return ret;
             }
+#if !ADB_NON_ANDROID
             selinux_android_restorecon(name, 0);
+#endif
         }
         *x++ = '/';
     }
@@ -248,7 +252,9 @@ static int handle_send_file(int s, char *path, uid_t uid,
     if(fd >= 0) {
         struct utimbuf u;
         adb_close(fd);
+#if !ADB_NON_ANDROID
         selinux_android_restorecon(path, 0);
+#endif
         u.actime = timestamp;
         u.modtime = timestamp;
         utime(path, &u);
