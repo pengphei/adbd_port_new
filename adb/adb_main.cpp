@@ -32,6 +32,11 @@
 #include <getopt.h>
 #include <sys/prctl.h>
 
+#if ADB_NON_ANDROID
+#define _BSD_SOURCE
+#include <grp.h>
+#endif
+
 #include "cutils/properties.h"
 #include "private/android_filesystem_config.h"
 #include "selinux/selinux.h"
