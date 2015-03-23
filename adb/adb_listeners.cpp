@@ -18,6 +18,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <cutils/sockets.h>
 
 #include "sysdeps.h"
 #include "transport.h"
