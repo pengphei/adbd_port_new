@@ -437,7 +437,7 @@ asocket *create_local_socket(int fd)
 
 asocket *create_local_service_socket(const char *name)
 {
-#if !ADB_HOST
+#if !defined(ADB_HOST) && !defined(ADB_NON_ANDROID)
     if (!strcmp(name,"jdwp")) {
         return create_jdwp_service_socket();
     }

@@ -440,8 +440,10 @@ int service_to_fd(const char *name)
         ret = unix_open(name + 4, O_RDWR | O_CLOEXEC);
     } else if(!strncmp(name, "framebuffer:", 12)) {
         ret = create_service_thread(framebuffer_service, 0);
+#if !ADB_NON_ANDROID
     } else if (!strncmp(name, "jdwp:", 5)) {
         ret = create_jdwp_connection_fd(atoi(name+5));
+#endif
     } else if(!HOST && !strncmp(name, "shell:", 6)) {
         ret = create_subproc_thread(name + 6, SUBPROC_PTY);
     } else if(!HOST && !strncmp(name, "exec:", 5)) {

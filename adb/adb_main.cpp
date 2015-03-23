@@ -324,9 +324,11 @@ int adb_main(int is_daemon, int server_port)
         local_init(DEFAULT_ADB_LOCAL_TRANSPORT_PORT);
     }
 
+#if !ADB_NON_ANDROID
     D("adb_main(): pre init_jdwp()\n");
     init_jdwp();
     D("adb_main(): post init_jdwp()\n");
+#endif
 #endif
 
     if (is_daemon)
