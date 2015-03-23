@@ -17,7 +17,7 @@
 #ifndef __ADB_TRACE_H
 #define __ADB_TRACE_H
 
-#if !ADB_HOST
+#if !defined(ADB_HOST) && !defined(ADB_NON_ANDROID)
 #include <android/log.h>
 #else
 #include <stdio.h>
@@ -73,7 +73,7 @@ void    adb_trace_init(void);
 #  define ADB_TRACING  ((adb_trace_mask & (1 << TRACE_TAG)) != 0)
 
 /* you must define TRACE_TAG before using this macro */
-#if ADB_HOST
+#if defined(ADB_HOST) || defined(ADB_NON_ANDROID)
 #  define  D(...)                                      \
         do {                                           \
             if (ADB_TRACING) {                         \
