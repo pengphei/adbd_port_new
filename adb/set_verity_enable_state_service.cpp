@@ -28,6 +28,8 @@
 #include "cutils/properties.h"
 
 #include "adb.h"
+
+#if !ADB_NON_ANDROID
 #include "ext4_sb.h"
 #include "fs_mgr.h"
 #include "remount_service.h"
@@ -229,3 +231,9 @@ void set_verity_enabled_state_service(int fd, void* cookie)
 errout:
     adb_close(fd);
 }
+#else
+void set_verity_enabled_state_service(int fd, void* cookie)
+{
+    adb_close(fd);
+}
+#endif
