@@ -1,0 +1,95 @@
+#
+# adbd building script
+#
+
+Import('genv')
+
+env = Environment()
+env["CC"] = genv["CC"]
+env["CXX"] = genv["CXX"]
+env["AS"] = genv["AS"]
+env["AR"] = genv["AR"]
+env["LINK"] = genv["LINK"]
+env["OBJCOPY"] = genv["OBJCOPY"]
+env["NM"] = genv["NM"]
+env["ENV"] = genv["ENV"]
+
+env["LIBPATH"] = [
+	genv["out"],
+]
+
+env["CCFLAGS"] = [
+	"-O2",
+	"-g",
+	"-DADB_HOST=0",
+	"-Wall",
+	"-Wno-unused-parameter",
+	"-D_XOPEN_SOURCE",
+	"-D_GNU_SOURCE",
+	
+	# based on kernel config
+	"-DANDROID_GADGET=1",
+	"-DADB_NON_ANDROID=1",
+	
+	"-DHAVE_PTHREADS=1",
+	"-DPROP_NAME_MAX=32",
+	"-DPROP_VALUE_MAX=92",
+	"-std=c++11",
+]
+env["LINKFLAGS"] = [
+]
+
+dst = "adbd"
+
+inc = [
+    ".",
+    "../include"
+]
+
+src = [
+    "adb.cpp",
+    "adb_auth.cpp",
+    "adb_io.cpp",
+    "adb_listeners.cpp",
+    "sockets.cpp",
+    "transport.cpp",
+    "transport_local.cpp",
+    "transport_usb.cpp",
+    "get_my_path_linux.cpp",
+    "adb_auth_client.cpp",
+    "fdevent.cpp",
+    "adb_main.cpp",
+    "services.cpp",
+    "file_sync_service.cpp",
+    "framebuffer_service.cpp",
+    "remount_service.cpp",
+    "set_verity_enable_state_service.cpp",
+    
+    
+    
+    # DISABLED SOURCES for ADB_NON_ANDROID:
+    #"qemu_tracing.cpp",
+    #"usb_linux.cpp",
+    #"jdwp_service.cpp",
+]
+
+lib = [
+    "pthread",
+    "cutils",
+    "adb_usb",
+	"crypto",
+	"resolv",
+	"ssl",
+	"stdc++",
+]
+
+client_dst = "adb_usb"
+
+client_src = [
+    "usb_linux_client.c",
+]
+
+client_lib = env.StaticLibrary(target=client_dst, source=client_src, LIBS=lib, CPPPATH=inc)
+
+adbd_prog = env.Program(target=dst, source=src, LIBS=lib, CPPPATH=inc)
+Return("client_lib", "adbd_prog")

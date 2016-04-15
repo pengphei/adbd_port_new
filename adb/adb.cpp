@@ -43,7 +43,8 @@
 #if ADB_NON_ANDROID
 #include <cutils/properties.h>
 #endif
-#include <sys/capability.h>
+//#include <sys/capability.h>
+#include <linux/capability.h>
 #include <sys/mount.h>
 #endif
 
