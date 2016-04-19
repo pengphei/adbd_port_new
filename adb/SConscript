@@ -34,7 +34,7 @@ env["CCFLAGS"] = [
 	"-DHAVE_PTHREADS=1",
 	"-DPROP_NAME_MAX=32",
 	"-DPROP_VALUE_MAX=92",
-	"-std=c++11",
+	"-std=c++0x",
 ]
 env["LINKFLAGS"] = [
 ]
