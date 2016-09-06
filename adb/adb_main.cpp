@@ -33,7 +33,9 @@
 #include <sys/prctl.h>
 
 #if ADB_NON_ANDROID
+#ifndef _BSD_SOURCE
 #define _BSD_SOURCE
+#endif
 #include <grp.h>
 #endif
 
