@@ -1,4 +1,4 @@
-.. image:: https://travis-ci.org/pengphei/adb_port_new.svg?branch=master
+.. image:: https://travis-ci.org/pengphei/adbd_port_new.svg?branch=master
 
 About ADB
 ====================================
