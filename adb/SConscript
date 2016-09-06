@@ -24,7 +24,6 @@ env["CCFLAGS"] = [
 	"-DADB_HOST=0",
 	"-Wall",
 	"-Wno-unused-parameter",
-	"-Wc++0x-compat",
 	"-D_XOPEN_SOURCE",
 	"-D_GNU_SOURCE",
 	
@@ -35,6 +34,7 @@ env["CCFLAGS"] = [
 	"-DHAVE_PTHREADS=1",
 	"-DPROP_NAME_MAX=32",
 	"-DPROP_VALUE_MAX=92",
+	"--std=c++11",
 ]
 env["LINKFLAGS"] = [
 ]
